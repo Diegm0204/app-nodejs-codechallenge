@@ -1,0 +1,64 @@
+scalar UUID
+scalar BigDecimal
+scalar DateTime
+
+type Query {
+    """
+    Obtiene una transacción por su ID externo
+    """
+    transaction(id: UUID!): Transaction
+    
+    """
+    Obtiene todas las transacciones (paginado y filtrado por status opcional)
+    """
+    transactions(page: Int = 0, size: Int = 10, status: String): TransactionPage!
+}
+
+type Mutation {
+    """
+    Crea una nueva transacción
+    """
+    createTransaction(input: CreateTransactionInput!): Transaction!
+}
+
+input CreateTransactionInput {
+    accountExternalIdDebit: UUID!
+    accountExternalIdCredit: UUID!
+    transferTypeId: Int!
+    value: BigDecimal!
+    """
+    Clave de idempotencia opcional generada por el cliente.
+    Si se envía la misma clave dos veces, devuelve la transacción original.
+    Previene duplicados por reintentos o doble clic del usuario.
+    """
+    idempotencyKey: String
+}
+
+type Transaction {
+    transactionId: UUID!
+    accountExternalIdDebit: UUID!
+    accountExternalIdCredit: UUID!
+    transactionType: TransactionType!
+    status: String!
+    value: BigDecimal!
+    createdAt: DateTime!
+    updatedAt: DateTime
+}
+
+type TransactionType {
+    id: Int!
+    name: String!
+}
+
+type TransactionStatus {
+    id: Int!
+    name: String!
+}
+
+type TransactionPage {
+    content: [Transaction!]!
+    totalElements: Int!
+    totalPages: Int!
+    currentPage: Int!
+    size: Int!
+}

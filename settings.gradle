@@ -1,0 +1,5 @@
+rootProject.name = 'yape-challenge'
+
+include 'transaction-service'
+include 'anti-fraud-service'
+include 'shared-domain'

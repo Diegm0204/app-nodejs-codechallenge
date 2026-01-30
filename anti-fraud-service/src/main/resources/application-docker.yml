@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+
+logging:
+  level:
+    com.yape.challenge: INFO

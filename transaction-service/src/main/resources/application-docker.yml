@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/yape_transactions
+    
+  kafka:
+    bootstrap-servers: kafka:9092
+    
+  data:
+    redis:
+      host: redis
+
+logging:
+  level:
+    com.yape.challenge: INFO
+    org.hibernate.SQL: INFO
